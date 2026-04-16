@@ -1,17 +1,25 @@
-import express, { Application } from 'express';
+import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import { usersRoutes } from './routes/routes';
 
-const app: Application = express();
-
-// Middlewares
+const app  = express();
 app.use(express.json());
-app.use(cors());
-app.use(helmet());
 
-// Basic Route for testing
-app.get('/', (req, res) => {
-    res.send('Server is running properly!');
-});
+
+usersRoutes(app);
+
+
+
+
+// app.get('/', (req, res) => {
+//     res.send('Server is running properly!');
+
+// });
+// app.post('/test', (req, res) => {
+//     const { name, email, age } = req.body;
+//     res.json({ message: `Hello, ${name}! You are ${age} years old. and your email is ${email}` });
+// });
+
 
 export default app;
