@@ -2,12 +2,23 @@ import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { errorResponse } from "../helpers/appServices";
 
+  export type User = {
+    id: number;
+    name: string;
+    email: string;
+    age: number;
+    username: string;
+    password?: string;  
+};
 
 export const addUserSchema = z.object({
   name: z.string().min(2, "Name is too short"),
-  username: z.string().min(3, "Username is required"),
   email: z.string().email("Invalid email format"),
+  age: z.number().int().positive("Age must be a positive integer"),
+  username: z.string().min(3, "Username is required"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
 }).strict();
+
 const validateAddUser = (req: Request, res: Response, next: NextFunction) => {
   try {
     addUserSchema.parse(req.body);
@@ -39,6 +50,9 @@ export const updateUserSchema = z.object({
   name: z.string().min(2, "Name is too short").optional(),
   username: z.string().min(3, "Username is required").optional(),
   email: z.string().email("Invalid email format").optional(),
+  age: z.number().int().positive("Age must be a positive integer").optional(),
+  password: z.string().min(6, "Password must be at least 6 characters long").optional(),
+
 }).strict();
 const validateUpdateUser = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -65,3 +79,5 @@ const validateGetUserById = (req: Request, res: Response, next: NextFunction) =>
   }
 };
 export { validateAddUser, validateDeleteUser, validateUpdateUser , validateGetUserById }; 
+
+

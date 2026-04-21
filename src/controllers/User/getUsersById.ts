@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { errorResponse, httpResponse } from "../../helpers/appServices";
 import * as userService from "../../userService";
-import getAllUsers from "./getAllUsers";
 
 const getUserById = async (req: Request, res: Response) => {
     try {
